@@ -1,9 +1,8 @@
-import { observable, action, runInAction, when } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 
 export interface VideoData {
     media: MediaStream | null;
     videoTrack: MediaStreamTrack | null;
-    imageCapture: ImageCapture | null;
 }
 
 export class VideoManager {
@@ -13,35 +12,13 @@ export class VideoManager {
     @observable
     public instance!: VideoData;
 
-    @observable
-    public capturedFrames: Blob[] = []
+    constructor(private readonly constraints: MediaStreamConstraints) {}
 
-    constructor(private readonly constraints: MediaStreamConstraints) {
-        when(
-            () => this.initalized && this.instance.imageCapture !== null,
-            () => {
-                setInterval(() => {
-                    this.instance.imageCapture!.takePhoto().then(data => {
-                        this.capturedFrames.push(data)
-                    }).catch(err => {})
-                }, 10)
-
-                setInterval(() => {
-                    console.log(this.capturedFrames)
-                    runInAction(() => {
-                        this.capturedFrames = []
-                    })
-                }, 1000)
-            }
-        )
-    }
-    
     @action
     public async getMedia() {
         const payload: VideoData = {
             media: null,
             videoTrack: null,
-            imageCapture: null
         }
 
         try {
@@ -54,7 +31,6 @@ export class VideoManager {
             
             if (videoTracks.length){
                 payload.videoTrack = videoTracks[0]
-                payload.imageCapture = new ImageCapture(videoTracks[0])
             }
             
         } catch (err) {
