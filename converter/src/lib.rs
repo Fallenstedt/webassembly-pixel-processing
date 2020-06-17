@@ -1,4 +1,5 @@
 mod utils;
+mod managers;
 
 use wasm_bindgen::prelude::*;
 
@@ -15,5 +16,6 @@ extern {
 
 #[wasm_bindgen]
 pub fn greet() {
-    alert("Hello, converter!");
+    let s = managers::media::add_cube_to_scene();
+    alert(&s);
 }
