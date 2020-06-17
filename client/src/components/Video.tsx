@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import Stats from 'stats.js';
 import { useGlobalStore } from '../stores/use_video_manager';
 import { config } from '../utils/config';
+// import * as wasm from 'converter'
 
 
 export function Video() {
@@ -9,7 +10,6 @@ export function Video() {
     const videoRef = useRef<HTMLVideoElement>(null)
     const statsRef = useRef<HTMLSpanElement>(null)
     const {videoStore} = useGlobalStore()
-
     const stats = new Stats();
     stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
 
@@ -22,6 +22,7 @@ export function Video() {
     }, [stats])
 
     useEffect(() => {
+
         // Set Stats
         if (statsRef.current) {
             statsRef.current.appendChild(stats.dom)
