@@ -1,7 +1,10 @@
 mod utils;
 mod managers;
 
+use std::panic;
 use wasm_bindgen::prelude::*;
+
+extern crate console_error_panic_hook;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -15,7 +18,16 @@ extern {
 }
 
 #[wasm_bindgen]
+pub fn init() {
+    panic::set_hook(Box::new(console_error_panic_hook::hook));
+}
+
+#[wasm_bindgen]
 pub fn greet() {
-    let s = managers::media::add_cube_to_scene();
-    alert(&s);
+    alert("Hello");
+}
+
+#[wasm_bindgen]
+pub fn onAnimationFrame() {
+    managers::media::getRawImageDataFromCanvas()
 }

@@ -17,6 +17,11 @@ export function Video() {
     const renderImageToCanvas = useCallback(() => {
         stats.begin()
         canvasRef.current!.getContext("2d")!.drawImage(videoRef.current!, 0, 0, (config.video.width), (config.video.height));
+        // TODO
+        // Invoke Wasm render method here. 
+        // Wasm render uses web sys to get image's pixel data in rust
+        // Figure out how to "send" this manipulated data back
+        // END TODO
         stats.end()
         window.requestAnimationFrame(renderImageToCanvas)
     }, [stats])
@@ -39,7 +44,6 @@ export function Video() {
         videoStore.getMedia().then(() => {
             if (videoRef.current && canvasRef.current && videoStore.initalized) {
                 videoRef.current!.srcObject = videoStore.instance.media;
-                // wasm render go here
                 renderImageToCanvas()
             }
         })

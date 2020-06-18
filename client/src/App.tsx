@@ -11,6 +11,7 @@ function App() {
         setLoading(true)
         const wasm = await import("converter");
         console.log(wasm)
+        wasm.init()
         wasm.greet()
         setWasm(wasm)
       } finally {
