@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import Stats from 'stats.js';
 import { useGlobalStore } from '../stores/use_video_manager';
 import { config } from '../utils/config';
-// import * as wasm from 'converter'
-
 
 export function Video() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -17,17 +15,11 @@ export function Video() {
     const renderImageToCanvas = useCallback(() => {
         stats.begin()
         canvasRef.current!.getContext("2d")!.drawImage(videoRef.current!, 0, 0, (config.video.width), (config.video.height));
-        // TODO
-        // Invoke Wasm render method here. 
-        // Wasm render uses web sys to get image's pixel data in rust
-        // Figure out how to "send" this manipulated data back
-        // END TODO
         stats.end()
         window.requestAnimationFrame(renderImageToCanvas)
     }, [stats])
 
     useEffect(() => {
-
         // Set Stats
         if (statsRef.current) {
             statsRef.current.appendChild(stats.dom)
@@ -49,7 +41,6 @@ export function Video() {
         })
 
     }, [videoRef, statsRef, renderImageToCanvas, stats.dom, videoStore])
-
 
     return (
         <div>
