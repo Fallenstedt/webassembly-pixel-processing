@@ -5,7 +5,7 @@ export interface VideoData {
     videoTrack: MediaStreamTrack | null;
 }
 
-export class VideoManager {
+export class MediaEngine {
     @observable
     public initalized = false;
     

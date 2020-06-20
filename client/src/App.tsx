@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Video } from './components/Video';
+import { useEngines } from './stores/use_engines';
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [wasm, setWasm] = useState<any>(null);
+  const {wasmEngine } = useEngines()
 
   useEffect(() => {
     async function loadWasm() {
       try {
         setLoading(true)
-        const wasm = await import("converter");
-        console.log(wasm)
-        wasm.init()
-        wasm.greet()
-        setWasm(wasm)
+        await wasmEngine.initialize()
+        wasmEngine.instance?.greet()
+        console.log(wasmEngine.instance)
       } finally {
         setLoading(false)
       }

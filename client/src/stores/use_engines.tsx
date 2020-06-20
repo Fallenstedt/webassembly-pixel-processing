@@ -1,13 +1,16 @@
 import React from 'react';
-import { VideoManager } from "./VideoManager";
+import { MediaEngine } from "./MediaEngine";
 import { config } from '../utils/config';
+import { WasmEngine } from './WasmEngine';
 
 
 const globalContext = React.createContext({
-    videoStore: new VideoManager({
+    mediaEngine: new MediaEngine({
         audio: false,
         video: { width: config.video.width, height: config.video.height }
       }),
+    wasmEngine: new WasmEngine()
 });
-export const useGlobalStore = () => React.useContext(globalContext);
+
+export const useEngines = () => React.useContext(globalContext);
 

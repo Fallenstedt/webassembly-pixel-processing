@@ -42,7 +42,7 @@ cd my-project
 ```
 
 ### 🛠️ Build with `wasm-pack build`
-
+https://rustwasm.github.io/wasm-pack/book/commands/build.html
 ```
 wasm-pack build
 ```

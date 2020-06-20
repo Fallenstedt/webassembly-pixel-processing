@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import Stats from 'stats.js';
-import { useGlobalStore } from '../stores/use_video_manager';
+import { useEngines } from '../stores/use_engines';
 import { config } from '../utils/config';
 
 export function Video() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null)
     const statsRef = useRef<HTMLSpanElement>(null)
-    const {videoStore} = useGlobalStore()
+    const {mediaEngine, wasmEngine } = useEngines()
     const stats = new Stats();
     stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
 
@@ -15,6 +15,7 @@ export function Video() {
     const renderImageToCanvas = useCallback(() => {
         stats.begin()
         canvasRef.current!.getContext("2d")!.drawImage(videoRef.current!, 0, 0, (config.video.width), (config.video.height));
+        // wasmEngine.instance?.onAnimationFrame()
         stats.end()
         window.requestAnimationFrame(renderImageToCanvas)
     }, [stats])
@@ -33,14 +34,14 @@ export function Video() {
         }
 
         // Render each frame to a canvas element for Rust to see
-        videoStore.getMedia().then(() => {
-            if (videoRef.current && canvasRef.current && videoStore.initalized) {
-                videoRef.current!.srcObject = videoStore.instance.media;
+        mediaEngine.getMedia().then(() => {
+            if (videoRef.current && canvasRef.current && mediaEngine.initalized) {
+                videoRef.current!.srcObject = mediaEngine.instance.media;
                 renderImageToCanvas()
             }
         })
 
-    }, [videoRef, statsRef, renderImageToCanvas, stats.dom, videoStore])
+    }, [videoRef, statsRef, renderImageToCanvas, stats.dom, mediaEngine])
 
     return (
         <div>

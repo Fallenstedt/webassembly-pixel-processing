@@ -7,7 +7,6 @@ pub fn getRawImageDataFromCanvas() {
         .dyn_into::<web_sys::HtmlCanvasElement>()
         .map_err(|_| ())
         .unwrap();
-
 }
 
 fn get_element_by_id(d: &Document, id: &str) -> Element {
