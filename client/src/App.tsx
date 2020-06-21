@@ -1,29 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { Observer } from 'mobx-react'
 import { Video } from './components/Video';
 import { useEngines } from './stores/use_engines';
 
 function App() {
-  const [loading, setLoading] = useState(true);
   const {wasmEngine } = useEngines()
 
   useEffect(() => {
     async function loadWasm() {
-      try {
-        setLoading(true)
         await wasmEngine.initialize()
-        wasmEngine.instance?.greet()
-        console.log(wasmEngine.instance)
-      } finally {
-        setLoading(false)
-      }
     }
     loadWasm()
   }, [])
 
   return (
-    <div>
-      {loading ? <h1>Loading...</h1> : <Video />}
-    </div>
+    <Observer>
+      {() => wasmEngine.loading ? <h1>Loading...</h1> : <Video />}
+    </Observer>
   )
 
 }
