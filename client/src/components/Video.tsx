@@ -14,11 +14,17 @@ export function Video() {
 
     const renderImageToCanvas = useCallback(() => {
         stats.begin()
-        canvasRef.current!.getContext("2d")!.drawImage(videoRef.current!, 0, 0, (config.video.width), (config.video.height));
-        // wasmEngine.instance?.onAnimationFrame()
+        handleVideoFrameOnCanvas();
         stats.end()
         window.requestAnimationFrame(renderImageToCanvas)
     }, [stats])
+
+
+    function handleVideoFrameOnCanvas() {
+        const ctx = canvasRef.current!.getContext("2d")!
+        ctx.drawImage(videoRef.current!, 0, 0, (config.video.width), (config.video.height));
+        wasmEngine.instance!.on_animation_frame();
+    }
 
     useEffect(() => {
         // Set Stats
@@ -42,7 +48,7 @@ export function Video() {
         })
 
     }, [videoRef, statsRef, renderImageToCanvas, stats.dom, mediaEngine])
-
+    
     return (
         <div>
             <span ref={statsRef}></span>

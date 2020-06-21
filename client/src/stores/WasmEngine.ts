@@ -1,5 +1,5 @@
 import { observable, runInAction, action } from "mobx";
-import wasm from "converter";
+import * as wasm from "converter";
 
 type ConverterType = typeof wasm
 

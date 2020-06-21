@@ -2,15 +2,11 @@ use wasm_bindgen::JsCast;
 use web_sys::*;
 
 pub struct Frame {
-    canvas: web_sys::HtmlCanvasElement,
-    context: web_sys::CanvasRenderingContext2d,
+    pub context: web_sys::CanvasRenderingContext2d,
 }
 
-// TODO
-// Pass raw image data over instead of having rust search the DOM 60fps.
-// Or research how to create a "safe" singleton 
+// Research how to create a "safe" singleton 
 // https://rust-embedded.github.io/book/peripherals/singletons.html
-
 impl Frame {
     pub fn new(canvas_id: &str) -> Frame {
         let doc: Document = Frame::get_document();
@@ -18,10 +14,12 @@ impl Frame {
         let context = Frame::get_2d_context(&canvas);
 
         Frame{
-            canvas,
             context
-        }
-        
+        }   
+    }
+
+    pub fn process_image_data(&self) {
+        let data: &Vec<u8> = &self.context.get_image_data(0.0, 0.0, 1280.0, 720.0).unwrap().data().to_vec();
     }
 
     fn get_document() -> Document {
@@ -38,7 +36,6 @@ impl Frame {
             .unwrap();
         
             context_2d
-        
     }
 
     fn get_element_by_id(d: &Document, id: &str) -> web_sys::HtmlCanvasElement {

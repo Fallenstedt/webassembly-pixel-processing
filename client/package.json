@@ -45,6 +45,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/plugin-syntax-import-meta": "^7.10.1",
+    "@babel/preset-env": "^7.10.3",
+    "babel-loader": "^8.1.0",
     "react-app-rewired": "^2.1.6"
   }
 }

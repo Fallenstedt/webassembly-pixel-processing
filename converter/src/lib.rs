@@ -1,8 +1,8 @@
 mod utils;
 mod managers;
 
-
-use std::panic;
+// The wasm-pack uses wasm-bindgen to build and generate JavaScript binding file.
+// Import the wasm-bindgen crate.
 use wasm_bindgen::prelude::*;
 
 extern crate console_error_panic_hook;
@@ -20,7 +20,8 @@ pub fn init_web() {
 }
 
 #[wasm_bindgen]
-pub fn onAnimationFrame(canvas_id: &str) {
-    let f = managers::media::Frame::new(canvas_id);
-    
+pub fn on_animation_frame() {
+    let d = managers::media::Frame::new("canvas_element");
+    d.process_image_data();
+    log!("Processed data")
 }
