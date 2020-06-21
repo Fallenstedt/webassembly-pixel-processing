@@ -17,7 +17,7 @@ export class WasmEngine {
     public async initialize() {
         try {
             const wasm = await import("converter");
-            wasm.init("canvas_element")
+            wasm.init_web()
             runInAction(() => {
                 this.loading = false;
                 this.instance = wasm

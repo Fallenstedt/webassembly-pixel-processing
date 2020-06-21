@@ -14,14 +14,13 @@ extern crate web_sys;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-
 #[wasm_bindgen]
-pub fn init(canvas_id: &str) {
+pub fn init_web() {
     utils::set_panic_hook();
-    let f = managers::media::Frame::new(canvas_id);
 }
 
 #[wasm_bindgen]
-pub fn onAnimationFrame() {
-    // managers::media::getRawImageDataFromCanvas()
+pub fn onAnimationFrame(canvas_id: &str) {
+    let f = managers::media::Frame::new(canvas_id);
+    
 }
