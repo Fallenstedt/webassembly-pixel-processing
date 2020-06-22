@@ -1,1 +1,0 @@
-/Users/alex/Desktop/wasm-demo/target/wasm32-unknown-unknown/debug/optical_character_recognition_wasm.wasm: /Users/alex/Desktop/wasm-demo/src/lib.rs /Users/alex/Desktop/wasm-demo/src/managers/media.rs /Users/alex/Desktop/wasm-demo/src/managers/mod.rs /Users/alex/Desktop/wasm-demo/src/utils.rs
