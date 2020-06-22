@@ -1,6 +1,4 @@
 import { observable, runInAction, action } from "mobx";
-// import * as wasm from "converter";
-
 type ConverterType = any;
 
 export class WasmEngine {
@@ -17,11 +15,11 @@ export class WasmEngine {
     public async initialize() {
         try {
             //@ts-ignore
-            const wasm = await import("/pkg");
-            wasm.init_web()
+            const wasm = await import("../../pkg/index.js");
+            // wasm.init_web()
             runInAction(() => {
                 this.loading = false;
-                this.instance = wasm
+                this.instance = "foo"
             })
         } catch (error) {
             runInAction(() => {

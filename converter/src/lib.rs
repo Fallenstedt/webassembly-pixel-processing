@@ -19,9 +19,18 @@ pub fn init_web() {
     utils::set_panic_hook();
 }
 
+pub fn start() {
+    // /**
+    //  * Create a single frame manager
+    //  * gets elements by id once!
+    //  * does the animation frame business
+    //  */
+}
+
+
 #[wasm_bindgen]
 pub fn on_animation_frame() {
-    let d = managers::media::Frame::new("canvas_element");
-    d.process_image_data();
+    let frame_manager = managers::media::Frame::new("canvas_element");
+    frame_manager.process_image_data();
     log!("Processed data")
 }

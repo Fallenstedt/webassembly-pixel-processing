@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "sourceMap": true,
+      "jsx": "react",
+      "lib": ["dom", "es2015"],
+      "strict": true,
+      "experimentalDecorators": true,
+      "esModuleInterop": true,
+      "module": "esNext",
+      "target": "es5",
+      "moduleResolution": "node"
+    }
+}

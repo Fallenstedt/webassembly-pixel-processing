@@ -1,0 +1,30 @@
+{
+  "author": "You <you@example.com>",
+  "name": "rust-webpack-template",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "rimraf dist pkg && webpack",
+    "start": "rimraf dist pkg && webpack-dev-server --open -d",
+    "test": "cargo test && wasm-pack test --headless"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.38",
+    "@types/react-dom": "^16.9.8",
+    "@types/stats": "^0.16.30",
+    "@wasm-tool/wasm-pack-plugin": "^1.1.0",
+    "copy-webpack-plugin": "^5.0.3",
+    "rimraf": "^3.0.0",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.3",
+    "webpack-dev-server": "^3.7.1"
+  },
+  "dependencies": {
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "stats.js": "^0.17.0"
+  }
+}
