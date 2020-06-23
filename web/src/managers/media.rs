@@ -1,4 +1,3 @@
-use sdk;
 use wasm_bindgen::JsCast;
 use web_sys::*;
 
@@ -26,10 +25,6 @@ impl Frame {
             .unwrap()
             .data()
             .to_vec();
-        // https://stackoverflow.com/questions/27150652/how-can-i-get-an-array-or-a-slice-from-a-raw-pointer
-        let raw_ptr_data: *const u8 = &data as *const _ as *const u8;
-
-        sdk::detect_face(raw_ptr_data, width as u32, height as u32);
     }
 
     fn get_document() -> Document {

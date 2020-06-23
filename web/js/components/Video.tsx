@@ -7,9 +7,9 @@ export function Video() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null)
     const statsRef = useRef<HTMLSpanElement>(null)
-    const {mediaEngine, wasmEngine } = useEngines()
+    const { mediaEngine, wasmEngine } = useEngines()
     const stats = new Stats();
-    stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
 
 
     const renderImageToCanvas = useCallback(() => {
@@ -23,6 +23,7 @@ export function Video() {
     function handleVideoFrameOnCanvas() {
         const ctx = canvasRef.current!.getContext("2d")!
         ctx.drawImage(videoRef.current!, 0, 0, (config.video.width), (config.video.height));
+        ctx.filter = "grayscale(100%)"
         wasmEngine.instance!.on_animation_frame();
     }
 
@@ -34,27 +35,29 @@ export function Video() {
 
         // Play Video
         if (videoRef.current) {
-            videoRef.current.onloadedmetadata = function(e) {
+            videoRef.current.onloadedmetadata = function (e) {
                 videoRef.current!.play();
-              };
+            };
         }
 
         // Render each frame to a canvas element for Rust to see
         mediaEngine.getMedia().then(() => {
             if (videoRef.current && canvasRef.current && mediaEngine.initalized) {
                 videoRef.current!.srcObject = mediaEngine.instance.media;
-                // wasmEngine.instance.start()
+                const wasm = new wasmEngine.instance!.WebLightShow("video_element");
+                wasm.test()
                 renderImageToCanvas()
             }
         })
 
     }, [videoRef, statsRef, renderImageToCanvas, stats.dom, mediaEngine])
-    
+
     return (
         <div>
             <span ref={statsRef}></span>
             {/* Rust would find this video element by id */}
-            <video style={{display: 'none'}} ref={videoRef}></video>
+            {/* <video style={{ display: 'none' }} ref={videoRef}></video> */}
+            <video id="video_element" ref={videoRef}></video>
             {/* A canvas for rust to draw images onto */}
             <canvas id="canvas_element" width={config.video.width} height={config.video.height} ref={canvasRef}></canvas>
         </div>

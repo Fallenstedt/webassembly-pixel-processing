@@ -34,6 +34,7 @@ features = [
   'Document',
   'Element',
   'HtmlCanvasElement',
+  'HtmlVideoElement',
   'Window',
   'ImageData'
 ]
