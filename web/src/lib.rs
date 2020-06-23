@@ -13,16 +13,8 @@ use wasm_bindgen::prelude::*;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-// https://rustwasm.github.io/docs/wasm-bindgen/reference/attributes/on-rust-exports/start.html
 #[wasm_bindgen(start)]
 pub fn main_js() -> Result<(), JsValue> {
     utils::set_panic_hook();
     Ok(())
-}
-
-#[wasm_bindgen]
-pub fn on_animation_frame() {
-    // let frame_manager = managers::media::Frame::new("canvas_element");
-    // frame_manager.process_image_data();
-    // log!("Processed data")
 }
