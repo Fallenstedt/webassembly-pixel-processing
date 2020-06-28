@@ -32,12 +32,18 @@ features = [
   'console',
   'CanvasRenderingContext2d',
   'Document',
+  'EventTarget',
   'Element',
   'HtmlCanvasElement',
   'HtmlVideoElement',
-  'Window',
-  'Element',
   'HtmlElement',
+  'ImageData',
+  'MediaStream',
+  'MessageEvent',
+  'Performance',
+  'RtcDataChannel',
+  'RtcDataChannelEvent',
+  'Window',
 ]
 
 # The `console_error_panic_hook` crate provides better debugging of panics by

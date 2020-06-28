@@ -4,34 +4,25 @@ import { useEngines } from '../stores/use_engines';
 import { config } from '../utils/config';
 
 export function Video() {
-    const videoRef = useRef<HTMLVideoElement>(null)
+    const canvasRef = useRef<HTMLCanvasElement>(null)
     const { mediaEngine, wasmEngine } = useEngines()
 
 
     useEffect(() => {
-        // Play Video
-        if (videoRef.current) {
-            videoRef.current.onloadedmetadata = function (e) {
-                videoRef.current!.play();
-            };
-        }
-
         // Render each frame to a canvas element for Rust to see
-        mediaEngine.getMedia().then(() => {
-            if (videoRef.current && mediaEngine.initalized) {
-                videoRef.current!.srcObject = mediaEngine.instance.media;
-                /**TODO get video resolution dimensions instead of hardcoded values */
-                const wasm = new wasmEngine.instance!.WebLightShow("video_element", config.video.width, config.video.height);
-                wasm.test();
-                wasm.run();
+        mediaEngine.getMedia().then((data) => {
+            if (mediaEngine.initalized && mediaEngine.instance.media && canvasRef.current !== null) {
+                const renderingEngine = new wasmEngine.instance!.RenderingEngine();
+                renderingEngine.add_target_canvas(canvasRef.current);
+                renderingEngine.start(mediaEngine.instance.media);
             }
         })
 
-    }, [videoRef, mediaEngine])
+    }, [canvasRef, mediaEngine])
 
     return (
         <div>
-            <video id="video_element" ref={videoRef}></video>
+            <canvas ref={canvasRef} width="640" height="360"></canvas>
         </div>
     );
 }

@@ -1,8 +1,7 @@
-// This must be first so later modules can use the macros it defines.
+mod macros;
 mod utils;
 
-mod managers;
-
+mod rendering_engine;
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
