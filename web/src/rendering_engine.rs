@@ -69,7 +69,8 @@ impl RenderingEngine {
                     width: video.video_width() as f64,
                     height: video.video_height() as f64,
                 };
-
+                // draw frame onto buffer canvas
+                // perform any pixel manipulation you need on this canvas
                 canvas.element.set_width(video_dimensions.width as u32);
                 canvas.element.set_height(video_dimensions.height as u32);
                 canvas
@@ -77,6 +78,7 @@ impl RenderingEngine {
                     .draw_image_with_html_video_element(&video, 0.0, 0.0)
                     .expect("failed to draw video frame to <canvas> element");
 
+                // render resulting image onto target canvas
                 for target in render_targets.borrow().iter() {
                     // Use scrollWidth/scrollHeight so we fill the canvas element.
                     let target_dimensions = Dimensions {
@@ -95,17 +97,6 @@ impl RenderingEngine {
                     // Ensure the target canvas has a set width/height, otherwise rendering breaks.
                     target.element.set_width(target_dimensions.width as u32);
                     target.element.set_height(target_dimensions.height as u32);
-
-                    // Background fill for letterboxing. Maybe optional, but useful for debugging?
-                    target
-                        .context_2d
-                        .set_fill_style(&JsValue::from_str("black"));
-                    target.context_2d.fill_rect(
-                        0.0,
-                        0.0,
-                        target_dimensions.width,
-                        target_dimensions.height,
-                    );
 
                     target
                         .context_2d
