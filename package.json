@@ -1,7 +1,0 @@
-{
-  "name": "wasm-demo",
-  "private": true,
-  "workspaces": [
-    "web"
-  ]
-}
